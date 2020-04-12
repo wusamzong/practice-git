@@ -10,28 +10,27 @@
           <li>Settings</li>
           <li>Help</li>
         </ul>
-        <p>Title</p>
+        <p>Title {{hi}}</p>
       </div>
 
       <div class="head-2">
         <div class="step">
-          <button class="previousStep"></button>
-          <button class="nextStep"></button>
+          <button class="previousStep">▲</button>
+          <button class="nextStep">▲</button>
         </div>
         <div class="play">
-          <button class="before"></button>
-          <button class="play"></button>
-          <button class="after"></button>
-          <p class="Time"></p>
+          <button class="before">▲</button>
+          <button class="play">▲</button>
+          <button class="after">▲</button>
+          <p class="length">{{time}}</p>
         </div>
         <div class="BPM">
-          {{BPM}}
-          <p>bpm</p>
-          <button class="speedUp"></button>
-          <button class="slowDown"></button>
+          <p>{{BPM}}bpm</p>
+          <button class="speedUp">▲</button>
+          <button class="slowDown" style="border-bottom-right-radius: 5px; border-top-right-radius: 5px;">▼</button>
         </div>
         <div class="volume">
-          <input type="range" min="0" max="100">
+          <input type="range" min="0" max="100" />
         </div>
       </div>
 
@@ -49,7 +48,8 @@ export default {
   data() {
     return {
       hi: "hello",
-      BPM: 120
+      BPM: 120,
+      time: "00:00.0"
     };
   }
 };
@@ -105,10 +105,86 @@ body {
 }
 .head-2 {
   grid-area: head2;
+  display: inline-block;
   background: #5f5f63;
+  display: grid;
+  grid-template-columns: auto 450px auto auto;
+  grid-template-rows: 50px;
+  grid-template-areas: "step play BPM volume";
+
+  height: 50px;
+}
+.step {
+  grid-area: step;
+  margin: 0 50px;
+}
+.step button{
+  display: inline-block;  
+  height: 40px;
+  width: 50px;
+  background: #383838;
+  padding: 4px 6px;
+  border: 2px solid #5f5f63;
+  border-radius: 5px;
+  color: #c0c0c0;
+  
+}
+.play {
+  grid-area: play;
+}
+.play button{
+  height: 40px;
+  width: 50px;
+  background: #383838;
+  border: 2px solid #5f5f63;
+  border-radius: 5px;
+  color: #c0c0c0;
+}
+.play p{
+  display: inline-block;
+  margin: 0 auto;
+  width: 120px ;
+  background: #383838;
+  border: 2px solid #5f5f63;
+  border-radius: 5px;
+  color: #c0c0c0;
+  text-align: center;
+  font-size: 23px;
+  padding: 15px;
+  padding-top: 2px;
+  padding-bottom: 7px;
+}
+.BPM {
+  grid-area: BPM;
+
+}
+.BPM p {
+  display: inline-block;
+  margin: 0 auto;
+  width: 100px ;
+  background: #383838;
+  border: 2px solid #5f5f63;
+  border-bottom-left-radius: 5px;
+  border-top-left-radius: 5px;
+  color: #c0c0c0;
+  text-align: center;
+  font-size: 23px;
+  padding: 20px;
+  padding-top: 2px;
+  padding-bottom: 7px;
+}
+.BPM button{
+  height: 37px;
+  width: 50px;
+  background: #383838;
+  color: #c0c0c0;
+  border: 1px solid #5f5f63;
 }
 
 
+.volume {
+  grid-area: volume;
+}
 
 .side-box {
   grid-area: sideBox;
