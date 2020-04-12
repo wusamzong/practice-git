@@ -15,19 +15,19 @@
 
       <div class="head-2">
         <div class="step">
-          <button class="previousStep">▲</button>
-          <button class="nextStep">▲</button>
+          <button class="previousStep leftRadius">▲</button>
+          <button class="nextStep rightRadius">▲</button>
         </div>
         <div class="play">
-          <button class="before">▲</button>
-          <button class="play">▲</button>
+          <button class="before leftRadius">▲</button>
+          <button class="play"><i class="fas fa-play"></i></button>
           <button class="after">▲</button>
-          <p class="length">{{time}}</p>
+          <p class="length rightRadius">{{time}}</p>
         </div>
         <div class="BPM">
-          <p>{{BPM}}bpm</p>
+          <p class="leftRadius">{{BPM}}bpm</p>
           <button class="speedUp">▲</button>
-          <button class="slowDown" style="border-bottom-right-radius: 5px; border-top-right-radius: 5px;">▼</button>
+          <button class="slowDown rightRadius">▼</button>
         </div>
         <div class="volume">
           <input type="range" min="0" max="100" />
@@ -105,85 +105,99 @@ body {
 }
 .head-2 {
   grid-area: head2;
-  display: inline-block;
-  background: #5f5f63;
-  display: grid;
-  grid-template-columns: auto 450px auto auto;
-  grid-template-rows: 50px;
-  grid-template-areas: "step play BPM volume";
 
-  height: 50px;
+  background: #5f5f63;
+  padding: 5px;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  justify-content: space-around;
+  align-items: stretch;
 }
 .step {
-  grid-area: step;
-  margin: 0 50px;
+  background: #5f5f63;
+  flex-grow: 1;
+  padding: 0 50px;
 }
-.step button{
-  display: inline-block;  
+.step button {
   height: 40px;
   width: 50px;
   background: #383838;
   padding: 4px 6px;
-  border: 2px solid #5f5f63;
-  border-radius: 5px;
+  border: 1px solid #5f5f63;
   color: #c0c0c0;
-  
+  cursor: pointer;
 }
 .play {
-  grid-area: play;
+  background: #5f5f63;
+  padding: 0 50px;
+  flex-grow: 2;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  justify-content: center;
+  align-items: stretch;
 }
-.play button{
+.play button {
+  flex-grow: 1;
   height: 40px;
   width: 50px;
   background: #383838;
-  border: 2px solid #5f5f63;
-  border-radius: 5px;
+  border: 1px solid #5f5f63;
   color: #c0c0c0;
-}
-.play p{
-  display: inline-block;
-  margin: 0 auto;
-  width: 120px ;
-  background: #383838;
-  border: 2px solid #5f5f63;
-  border-radius: 5px;
-  color: #c0c0c0;
-  text-align: center;
-  font-size: 23px;
-  padding: 15px;
-  padding-top: 2px;
-  padding-bottom: 7px;
-}
-.BPM {
-  grid-area: BPM;
+  cursor: pointer;
 
 }
-.BPM p {
-  display: inline-block;
+.play p {
+  flex-grow: 1;
   margin: 0 auto;
-  width: 100px ;
+  width: 120px;
   background: #383838;
-  border: 2px solid #5f5f63;
-  border-bottom-left-radius: 5px;
-  border-top-left-radius: 5px;
+  border: 1px solid #5f5f63;
   color: #c0c0c0;
   text-align: center;
   font-size: 23px;
-  padding: 20px;
-  padding-top: 2px;
-  padding-bottom: 7px;
+  padding: 5px;
 }
-.BPM button{
-  height: 37px;
-  width: 50px;
+.BPM {
+  background: #5f5f63;
+  flex-grow: 1;
+  padding: 0 35px;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  justify-content: center;
+  align-items: stretch;
+}
+.BPM p {
+  flex-grow: 2;
+  margin: 0 auto;
+  width: 100px;
+  background: #383838;
+  border: 1px solid #5f5f63;
+  color: #c0c0c0;
+  text-align: center;
+  padding: 5px;
+  font-size: 23px;
+}
+.BPM button {
+  flex-grow: 1;
   background: #383838;
   color: #c0c0c0;
   border: 1px solid #5f5f63;
+  cursor: pointer;
 }
 
-
 .volume {
-  grid-area: volume;
+  background: #5f5f63;
+  flex-grow: 1;
+}
+.leftRadius{
+  border-bottom-left-radius: 5px; 
+  border-top-left-radius: 5px;
+}.rightRadius{
+  border-bottom-right-radius: 5px; 
+  border-top-right-radius: 5px;
 }
 
 .side-box {
