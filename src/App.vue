@@ -10,24 +10,24 @@
           <li>Settings</li>
           <li>Help</li>
         </ul>
-        <p>Title {{hi}}</p>
+        <p>Title</p>
       </div>
 
       <div class="head-2">
         <div class="step">
-          <button class="previousStep leftRadius">▲</button>
-          <button class="nextStep rightRadius">▲</button>
+          <button class="previousStep leftRadius"><i class="material-icons">undo</i></button>
+          <button class="nextStep rightRadius"><i class="material-icons">redo</i></button>
         </div>
         <div class="play">
-          <button class="before leftRadius">▲</button>
-          <button class="play"><i class="fas fa-play"></i></button>
-          <button class="after">▲</button>
+          <button class="before leftRadius"><i class="material-icons">skip_previous</i></button>
+          <button class="play"><i class="material-icons">play_arrow</i></button>
+          <button class="after"><i class="material-icons">skip_next</i></button>
           <p class="length rightRadius">{{time}}</p>
         </div>
         <div class="BPM">
           <p class="leftRadius">{{BPM}}bpm</p>
-          <button class="speedUp">▲</button>
-          <button class="slowDown rightRadius">▼</button>
+          <button class="speedUp" @click="BPM+=5">▲</button>
+          <button class="slowDown rightRadius" @click="BPM-=5">▼</button>
         </div>
         <div class="volume">
           <input type="range" min="0" max="100" />
@@ -41,6 +41,7 @@
     <div class="bottom">bottom</div>
   </div>
 </template>
+
 <script rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/css/all.min.css'/>
 <script>
 export default {
