@@ -1,0 +1,20 @@
+<div class="head2">
+  <div class="step">
+    <button class="previousStep leftRadius"><i class="material-icons">undo</i></button>
+    <button class="nextStep rightRadius"><i class="material-icons">redo</i></button>
+  </div>
+  <div class="play">
+    <button class="before leftRadius"><i class="material-icons">skip_previous</i></button>
+    <button class="play"><i class="material-icons">play_arrow</i></button>
+    <button class="after"><i class="material-icons">skip_next</i></button>
+    <p class="length rightRadius">{{time}}</p>
+  </div>
+  <div class="BPM">
+    <p class="leftRadius">{{BPM}}bpm</p>
+    <button class="speedUp" @click="BPM+=5">▲</button>
+    <button class="slowDown rightRadius" @click="BPM-=5">▼</button>
+  </div>
+  <div class="volume">
+    <input type="range" min="0" max="100" />
+  </div>
+</div>

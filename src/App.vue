@@ -14,28 +14,16 @@
       </div>
 
       <div class="head-2">
-        <div class="step">
-          <button class="previousStep leftRadius"><i class="material-icons">undo</i></button>
-          <button class="nextStep rightRadius"><i class="material-icons">redo</i></button>
-        </div>
-        <div class="play">
-          <button class="before leftRadius"><i class="material-icons">skip_previous</i></button>
-          <button class="play"><i class="material-icons">play_arrow</i></button>
-          <button class="after"><i class="material-icons">skip_next</i></button>
-          <p class="length rightRadius">{{time}}</p>
-        </div>
-        <div class="BPM">
-          <p class="leftRadius">{{BPM}}bpm</p>
-          <button class="speedUp" @click="BPM+=5">▲</button>
-          <button class="slowDown rightRadius" @click="BPM-=5">▼</button>
-        </div>
-        <div class="volume">
-          <input type="range" min="0" max="100" />
-        </div>
+        <Head2 :BPM="BPM" :time="time"/>
       </div>
 
-      <div class="side-box">side-box</div>
+      <div class="side-box">
+        <button @click="track++" class="addButton">+ add track</button>
+        <Track v-for="num in trackIndex" :key="num"/>
+      </div>
+
       <div class="edit-box">edit-box</div>
+
     </div>
 
     <div class="bottom">bottom</div>
@@ -44,13 +32,25 @@
 
 <script rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/css/all.min.css'/>
 <script>
+import Track from '@/components/Track/index.vue'
+import Head2 from '@/components/Head2/index.vue'
 export default {
   name: "App",
+  components:{
+    Track,
+    Head2
+  },
+  computed:{
+    trackIndex(){
+      return this.track;
+    }
+  },
   data() {
     return {
       hi: "hello",
       BPM: 120,
-      time: "00:00.0"
+      time: "00:00.0",
+      track: 0
     };
   }
 };
@@ -70,7 +70,7 @@ body {
   width: 100%;
   margin: 0 auto;
   display: grid;
-  grid-template-columns: 250px auto;
+  grid-template-columns: 350px auto;
   grid-template-rows: 50px 50px auto;
   grid-template-areas:
     "head1 head1"
@@ -104,94 +104,8 @@ body {
   color: white;
   text-align: center;
 }
-.head-2 {
+.head-2{
   grid-area: head2;
-
-  background: #5f5f63;
-  padding: 5px;
-  display: flex;
-  flex-direction: row;
-  flex-wrap: nowrap;
-  justify-content: space-around;
-  align-items: stretch;
-}
-.step {
-  background: #5f5f63;
-  flex-grow: 1;
-  padding: 0 50px;
-}
-.step button {
-  height: 40px;
-  width: 50px;
-  background: #383838;
-  padding: 4px 6px;
-  border: 1px solid #5f5f63;
-  color: #c0c0c0;
-  cursor: pointer;
-}
-.play {
-  background: #5f5f63;
-  padding: 0 50px;
-  flex-grow: 2;
-  display: flex;
-  flex-direction: row;
-  flex-wrap: nowrap;
-  justify-content: center;
-  align-items: stretch;
-}
-.play button {
-  flex-grow: 1;
-  height: 40px;
-  width: 50px;
-  background: #383838;
-  border: 1px solid #5f5f63;
-  color: #c0c0c0;
-  cursor: pointer;
-
-}
-.play p {
-  flex-grow: 1;
-  margin: 0 auto;
-  width: 120px;
-  background: #383838;
-  border: 1px solid #5f5f63;
-  color: #c0c0c0;
-  text-align: center;
-  font-size: 23px;
-  padding: 5px;
-}
-.BPM {
-  background: #5f5f63;
-  flex-grow: 1;
-  padding: 0 35px;
-  display: flex;
-  flex-direction: row;
-  flex-wrap: nowrap;
-  justify-content: center;
-  align-items: stretch;
-}
-.BPM p {
-  flex-grow: 2;
-  margin: 0 auto;
-  width: 100px;
-  background: #383838;
-  border: 1px solid #5f5f63;
-  color: #c0c0c0;
-  text-align: center;
-  padding: 5px;
-  font-size: 23px;
-}
-.BPM button {
-  flex-grow: 1;
-  background: #383838;
-  color: #c0c0c0;
-  border: 1px solid #5f5f63;
-  cursor: pointer;
-}
-
-.volume {
-  background: #5f5f63;
-  flex-grow: 1;
 }
 .leftRadius{
   border-bottom-left-radius: 5px; 
@@ -204,6 +118,29 @@ body {
 .side-box {
   grid-area: sideBox;
   background: #2a2a31;
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+.addButton{
+  display: inline-block;
+  margin: 5px;
+  border-radius: 5px;
+  width: 95%;
+  height: 30px;
+}
+::-webkit-scrollbar {
+  width: 5px;
+}
+::-webkit-scrollbar-track {
+      background-color: #858585;
+} /* the new scrollbar will have a flat appearance with the set background color */
+ 
+::-webkit-scrollbar-thumb {
+      background-color: rgba(255, 255, 255, 0.774); 
+} /* this will style the thumb, ignoring the track */
+
+::-webkit-scrollbar-corner {
+      background-color: black;
 }
 .edit-box {
   grid-area: editBox;
