@@ -3,7 +3,7 @@
     <div class="layout">
       <div class="head-1">
         <ul>
-          <li>Exit</li>
+          <li>Exit test</li>
           <li>File</li>
           <li>Edit</li>
           <li>View</li>
