@@ -1,9 +1,9 @@
 <template>
   <div id="app">
-    <div class="layout">
+    <div class="layout" :class="[isEdit ? 'editTrack':'justTrack']">
       <div class="head-1">
         <ul>
-          <li>Exit test merge?</li>
+          <li>Exit</li>
           <li>File</li>
           <li>Edit</li>
           <li>View</li>
@@ -14,34 +14,53 @@
       </div>
 
       <div class="head-2">
-        <Head2 :BPM="BPM" :time="time"/>
+        <Head2 :BPM="BPM" :time="time" />
       </div>
 
-      <div class="side-box">
-        <button @click="track++" class="addButton">+ add track</button>
-        <Track v-for="num in trackIndex" :key="num"/>
+      <div class="track">
+
+        <div class="side-box">
+          <button @click="track++" class="addButton">+ add track</button>
+          <Track v-for="num in trackIndex" :key="num" />
+        </div>
+
+        <div class="track-box">
+          <div class="timeline">
+            <ul>
+              <li v-for="i in 16" :key="i">{{i}}</li>
+            </ul>
+          </div>
+          <TrackEdit v-for="num in trackIndex" :key="num" />
+        </div>
+
       </div>
 
-      <div class="edit-box">edit-box</div>
+      <div v-if="isEdit" class="Edit-box">Edit-box</div>
 
     </div>
 
-    <div class="bottom">bottom</div>
+    <div class="bottom">
+      <button @click="Ins=!Ins; edithandler()">Instrument</button>
+      <button @click="Fx=!Fx; edithandler()">Fx</button>
+      <button @click="MIDI=!MIDI; edithandler()">MIDI Editor</button>
+    </div>
   </div>
 </template>
 
 <script rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/css/all.min.css'/>
 <script>
-import Track from '@/components/Track/index.vue'
-import Head2 from '@/components/Head2/index.vue'
+import Track from "@/components/Track/index.vue";
+import Head2 from "@/components/Head2/index.vue";
+import TrackEdit from "@/components/TrackEdit/index.vue";
 export default {
   name: "App",
-  components:{
+  components: {
     Track,
-    Head2
+    Head2,
+    TrackEdit
   },
-  computed:{
-    trackIndex(){
+  computed: {
+    trackIndex() {
       return this.track;
     }
   },
@@ -50,8 +69,17 @@ export default {
       hi: "hello",
       BPM: 120,
       time: "00:00.0",
-      track: 0
+      track: 0,
+      Ins: false,
+      Fx: false,
+      MIDI: false,
+      isEdit: false
     };
+  },
+  methods: {
+    edithandler() {
+      this.isEdit = !this.isEdit;
+    }
   }
 };
 </script>
@@ -69,13 +97,24 @@ body {
   height: 95vh;
   width: 100%;
   margin: 0 auto;
+}
+.justTrack {
   display: grid;
-  grid-template-columns: 350px auto;
   grid-template-rows: 50px 50px auto;
   grid-template-areas:
-    "head1 head1"
-    "head2 head2"
-    "sideBox editBox";
+    "head1"
+    "head2"
+    "track";
+  background: #666666;
+}
+.editTrack {
+  display: grid;
+  grid-template-rows: 50px 50px 300px auto;
+  grid-template-areas:
+    "head1"
+    "head2"
+    "track"
+    "editBox";
   background: #666666;
 }
 
@@ -104,24 +143,32 @@ body {
   color: white;
   text-align: center;
 }
-.head-2{
+.head-2 {
   grid-area: head2;
 }
-.leftRadius{
-  border-bottom-left-radius: 5px; 
+.leftRadius {
+  border-bottom-left-radius: 5px;
   border-top-left-radius: 5px;
-}.rightRadius{
-  border-bottom-right-radius: 5px; 
+}
+.rightRadius {
+  border-bottom-right-radius: 5px;
   border-top-right-radius: 5px;
 }
 
-.side-box {
-  grid-area: sideBox;
-  background: #2a2a31;
+.track{
+  grid-area: track;
+  display: grid;
+  grid-template-columns: 350px auto;
+  grid-template-areas: "sideBox trackBox";
   overflow-y: auto;
   overflow-x: hidden;
 }
-.addButton{
+.side-box {
+  grid-area: sideBox;
+  background: #2a2a31;
+
+}
+.addButton {
   display: inline-block;
   margin: 5px;
   border-radius: 5px;
@@ -130,21 +177,51 @@ body {
 }
 ::-webkit-scrollbar {
   width: 5px;
+  height: 5px;
 }
 ::-webkit-scrollbar-track {
-      background-color: #858585;
+  background-color: #858585;
 } /* the new scrollbar will have a flat appearance with the set background color */
- 
+
 ::-webkit-scrollbar-thumb {
-      background-color: rgba(255, 255, 255, 0.774); 
+  background-color: rgba(255, 255, 255, 0.774);
 } /* this will style the thumb, ignoring the track */
 
 ::-webkit-scrollbar-corner {
-      background-color: black;
+  background-color: black;
+}
+.track-box {
+  grid-area: trackBox;
+  background: #202020;
+  overflow-x: auto;
+  overflow-y: hidden;
+}
+.timeline {
+  display: inline-block;
+  background: #38383a;
+  border-radius: 5px;
+  height: 35px;
+  width: 2000px;
+}
+.timeline ul {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  justify-content: space-between;
+  align-items: center;
+  margin: 0px;
+  margin-top: 7px;
+  margin-left: 5px;
+  padding: 0px;
+}
+.timeline li {
+  width: 20px;
+  list-style-type: none;
+  color: white;
 }
 .edit-box {
   grid-area: editBox;
-  background: #202020;
+  background: #858585;
 }
 .bottom {
   height: 5vh;

@@ -29,11 +29,11 @@ export default {
   margin: 5px;
   border-radius: 5px;
   width: 95%;
-  height: 180px;
+  height: 130px;
   background: #464646;
   display: grid;
-  grid-template-columns: 90px auto;
-  grid-template-rows: 90px 90px;
+  grid-template-columns: 65px auto;
+  grid-template-rows: 65px 65px;
   grid-template-areas: 
     "leftButton rightMessenge"
     "leftButton rightMessenge";
@@ -50,7 +50,7 @@ export default {
   height: 48%;
   background: #5c5c5c;
   border: none;
-  font-size: 30px;
+  font-size: 24px;
 }
 .rightMessenge{
   grid-area: rightMessenge;
