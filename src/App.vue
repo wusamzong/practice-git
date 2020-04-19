@@ -18,9 +18,8 @@
       </div>
 
       <div class="track">
-
         <div class="side-box">
-          <button @click="track++" class="addButton">+ add track</button>
+          <button @click="addTrackHandler" class="addButton">+ add track</button>
           <Track v-for="num in trackIndex" :key="num" />
         </div>
 
@@ -32,17 +31,17 @@
           </div>
           <TrackEdit v-for="num in trackIndex" :key="num" />
         </div>
-
       </div>
 
-      <div v-if="isEdit" class="Edit-box">Edit-box</div>
-
+      <div v-if="isEdit">
+        <EditBox :EditWindows="EditWindows" :isEdit="isEdit"/>
+      </div>
     </div>
 
     <div class="bottom">
-      <button @click="Ins=!Ins; edithandler()">Instrument</button>
-      <button @click="Fx=!Fx; edithandler()">Fx</button>
-      <button @click="MIDI=!MIDI; edithandler()">MIDI Editor</button>
+      <button @click="edithandler(0)">Instrument</button>
+      <button @click="edithandler(1)">Fx</button>
+      <button @click="edithandler(2)">MIDI Editor</button>
     </div>
   </div>
 </template>
@@ -52,16 +51,18 @@
 import Track from "@/components/Track/index.vue";
 import Head2 from "@/components/Head2/index.vue";
 import TrackEdit from "@/components/TrackEdit/index.vue";
+import EditBox from "@/components/EditBox/index.vue"
 export default {
   name: "App",
   components: {
     Track,
     Head2,
-    TrackEdit
+    TrackEdit,
+    EditBox
   },
   computed: {
     trackIndex() {
-      return this.track;
+      return this.trackNum;
     }
   },
   data() {
@@ -69,16 +70,46 @@ export default {
       hi: "hello",
       BPM: 120,
       time: "00:00.0",
-      track: 0,
-      Ins: false,
-      Fx: false,
-      MIDI: false,
+      trackNum: 0,
+      Track: [],
+      EditWindows: "",
       isEdit: false
     };
   },
   methods: {
-    edithandler() {
-      this.isEdit = !this.isEdit;
+    addTrackHandler() {
+      this.Track.push({
+        ID: this.trackNum,
+        Time: "00:00:00",
+        Data: Array.from({ length: 7 }, this.getEmptyArray)
+      });
+      this.trackNum++;
+    },
+    edithandler(num) {      
+      if (this.isEdit === true) {
+        if(this.EditWindows === num){
+          this.isEdit = false;
+          this.EditWindows = "";
+        }else{
+          this.EditWindows = num;
+          console.log(this.EditWindows);
+        }        
+      }      
+      else{
+        this.EditWindows = num;
+        this.isEdit = true;
+      }
+    },
+    getEmptyArray(length = 16) {
+      return Array.from({ length }, () => 0);
+    }
+  },
+  watch: {
+    Track: {
+      handler: function() {
+        console.log("add track");
+      },
+      deep: true
     }
   }
 };
@@ -155,7 +186,7 @@ body {
   border-top-right-radius: 5px;
 }
 
-.track{
+.track {
   grid-area: track;
   display: grid;
   grid-template-columns: 350px auto;
@@ -166,7 +197,6 @@ body {
 .side-box {
   grid-area: sideBox;
   background: #2a2a31;
-
 }
 .addButton {
   display: inline-block;
@@ -221,11 +251,22 @@ body {
 }
 .edit-box {
   grid-area: editBox;
-  background: #858585;
+  background: #606060;
 }
 .bottom {
   height: 5vh;
   width: 100%;
-  background: #323238;
+  background: #515159;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  overflow: hidden;
+}
+.bottom button {
+  color: aliceblue;
+  margin: 5px;
+  background: #44444b;
+  border: 2px solid #868693;
+  border-radius: 5px;
 }
 </style>
